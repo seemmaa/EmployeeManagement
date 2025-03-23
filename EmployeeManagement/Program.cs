@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using EmployeeManagement.Data;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using EmployeeManagement.Services;
@@ -7,8 +6,7 @@ using EmployeeManagement.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 
-builder.Services.AddDbContext<DataSource>
-    (opt => opt.UseInMemoryDatabase("EmployeeDb"));
+
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
