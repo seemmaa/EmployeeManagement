@@ -1,5 +1,4 @@
-﻿using EmployeeManagement.Data;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using System.Linq;
 using EmployeeManagement.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -56,7 +55,7 @@ namespace EmployeeManagement.Controllers
         {
             return _employee.getMinService();
         }
-        [HttpPost("deactivateEmployee")]
+        [HttpPut("deactivateEmployee")]
         public ActionResult<string> DeactivateEmp(int id)
         {
             return _employee.deactivateEmployee(id);

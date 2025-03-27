@@ -9,7 +9,7 @@ namespace EmployeeManagement.Controllers
     public class DepartmentController:ControllerBase
     {
         private readonly DepartmentService _department;
-        public DepartmentController(DepartmentService department)
+        public DepartmentController(DepartmentService department)//injection service to controller
         {
             _department = department;
         }
