@@ -6,10 +6,11 @@ namespace EmployeeManagement.Services
     public class EmployeeService
     {
         private readonly List<Employee> _employees = new List<Employee>();
-
+       // private readonly DepartmentService _department;
         public EmployeeService()
         {
-            
+           
+
             _employees.Add(new Employee
             {
                 Id = 1,
@@ -70,6 +71,8 @@ namespace EmployeeManagement.Services
 
         }
 
+       // private static int _id = 5;
+
         public List<Employee> GetAllEmployees() => _employees;
 
         public Employee? GetEmployeeById(int id) => _employees.FirstOrDefault(e => e.Id == id);
@@ -77,39 +80,71 @@ namespace EmployeeManagement.Services
 
         public List<Employee> GetActiveEmployees() => _employees.Where(n => n.IsActive == true).ToList();
 
-        public List<Employee> GetEmployeesByPosition(string position) => _employees.Where(n => n.Position==position
-        ).ToList();
+        public List<Employee> GetEmployeesByPosition(string position) => _employees.Where(n => n.Position.ToLower() ==  position.ToLower()).ToList();
+        public Employee GetEmployeesByFullName(string fullName) => _employees.FirstOrDefault(n =>string.Equals(  $"{n.FirstName.ToLower()} {n.LastName.ToLower()}" ,fullName.ToLower()));
 
         public List<Employee> GetInActiveEmployees() => _employees.Where(n => n.IsActive == false).ToList();
-        public string AddEmployee(Employee employee)
+        public string AddEmployee(CustomAddEmp employee)
         {
-            employee.Id = _employees.Count + 1; 
-            _employees.Add(employee);
-            return "Employee added successfully";
+           
+          
+
+                var emp = new Employee
+                {
+                    FirstName = employee.FirstName,
+                    LastName = employee.LastName,
+                    Position = employee.Position,
+                    DateOfBirth = employee.DateOfBirth,
+                    EndOfServiceDate = employee.EndOfServiceDate,
+                    IsActive = true,
+                    DepartmentId = employee.DepartmentId,
+                    DateOfEmployment = employee.DateOfEmployment,
+
+                };
+                //fix
+                //  employee.Id = ++_id;
+                emp.Id = _employees.Any() ? _employees.Max(e => e.Id) + 1 : 1;
+                _employees.Add(emp);
+                return "Employee added successfully";
+            
+           
         }
 
         public string DeleteEmployee(int id)
         {
             var employee = _employees.FirstOrDefault(e => e.Id == id);
-            if (employee == null) return "Department not found";
+            if (employee == null) return "Employee not found";
             _employees.Remove(employee);
             return "Employee deleted successfully";
         }
 
-        public string UpdateEmployee(int id,Employee e)
+        public string UpdateEmployee(int id, CustomEmployee e)
         {
-            var employee = _employees.FirstOrDefault(e => e.Id==id);
-            if (employee == null) return "Department not found";
-            employee.FirstName= e.FirstName;
-            employee.LastName= e.LastName;
-            employee.DateOfBirth= e.DateOfBirth;
-            employee.EndOfServiceDate= e.EndOfServiceDate;
-            employee.IsActive= e.IsActive;
-            employee.Position= e.Position;
-            employee.DateOfEmployment=e.DateOfEmployment;
-            employee.DepartmentId=e.DepartmentId;
-            employee.EndOfServiceDate= e.EndOfServiceDate;
-            return "Employee updated successfully";
+            var employee = _employees.FirstOrDefault(e => e.Id == id);
+            if (employee == null) return "Employee not found";
+            int depid = (int)employee.DepartmentId;
+            
+                if (!string.IsNullOrEmpty(e.FirstName))
+                    employee.FirstName = e.FirstName;
+                if (!string.IsNullOrEmpty(e.LastName))
+                    employee.LastName = e.LastName;
+                if (e.DateOfBirth != new DateTime(1990, 1, 1))
+                    employee.DateOfBirth = e.DateOfBirth;
+                if (e.EndOfServiceDate != new DateTime(1990, 1, 1))
+                    employee.EndOfServiceDate = e.EndOfServiceDate;
+                if (e.IsActive != null)
+                    employee.IsActive = e.IsActive;
+                if (!string.IsNullOrEmpty(e.Position))
+                    employee.Position = e.Position;
+                if (e.DateOfEmployment != new DateTime(1990, 1, 1))
+                    employee.DateOfEmployment = e.DateOfEmployment;
+                if (e.DepartmentId != null && e.DepartmentId != 0)
+                    employee.DepartmentId = e.DepartmentId;
+
+
+                return "Employee updated successfully";
+            
+          
 
         }
 
@@ -123,7 +158,9 @@ namespace EmployeeManagement.Services
         public string deactivateEmployee(int id)
         {
             var employee = _employees.FirstOrDefault(n => n.Id == id);
-            if(employee == null) return "Employye not found";
+            if(employee == null) return "Employee not found";
+            if(employee.IsActive==false)
+                return "Employee already inActive";
             employee.IsActive = false;
             employee.EndOfServiceDate = DateTime.Now;
             return "Employee deactivated successfully";
