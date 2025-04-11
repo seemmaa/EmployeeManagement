@@ -1,34 +1,40 @@
 ﻿
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel;
 namespace EmployeeManagement.Models
 {
     public class Employee
     {
         [Key]
         public int Id { get; set; }
-        [Required]
+        [DefaultValue("")]
+       
         public string FirstName { get; set; }
-        [Required]
+        [DefaultValue("")]
         public string LastName { get; set; }
-        public DateTime? DateOfBirth { get; set; }
-        [Required]
-        public DateTime DateOfEmployment { get; set; }
-        public DateTime? EndOfServiceDate { get; set; }
+        [DefaultValue("1990-01-01T00:00:00")]
+        public DateTime DateOfBirth { get; set; } 
+        [DefaultValue("1990-01-01T00:00:00")]
+        public DateTime DateOfEmployment { get; set; } 
+        [DefaultValue("1990-01-01T00:00:00")]
+        public DateTime EndOfServiceDate { get; set; }
         [Required]
         public int YearsOfService
         {
             get
             {
-                DateTime endDate = EndOfServiceDate ?? DateTime.Now;
+                DateTime endDate = EndOfServiceDate==DateTime.MinValue?  DateTime.Now: EndOfServiceDate;
                 int years = endDate.Year - DateOfEmployment.Year;
                 return years;
             }
         }
-        [Required]
+
+        [DefaultValue("")]
         public string Position { get; set; }
-        [Required]
-        public int DepartmentId { get; set; }
+      
+        public int? DepartmentId { get; set; }
 
         public bool? IsActive { get; set; }
 
