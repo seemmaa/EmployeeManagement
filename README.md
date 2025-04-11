@@ -6,39 +6,41 @@ Welcome to the Employee Management API! This project is built using ASP.NET Core
 
 ### Employee API
 
-GET /api/employees/all - Get all employees
+GET /api/Employees - Get all employees
 
-GET /api/employee/active - Get all active employees
+GET /api/Employees/active - Get all active employees
 
-GET /api/employee/InActive - Get all inactive employees
+GET /api/Employees/InActive - Get all inactive employees
 
-GET /api/employee/{id} - Get an employee by ID
+GET /api/Employees/{id} - Get an employee by ID
 
-POST /api/employee/AddNewEmployee - Create a new employee
+POST /api/Employees - Create a new employee
 
-PUT /api/employee/UpdateEmployee - Update an employee
+PUT /api/Employees - Update an employee
 
-DELETE /api/employee/DeleteEmployee - Delete an employee
+DELETE /api/Employees - Delete an employee
 
-GET /api/employee/DepId - Get employees by department ID
+GET /api/Employee/DepId - Get employees by department ID
 
-GET /api/employee/ByPosition - Get employees by position
+GET /api/Employees/ByPosition - Get employees by position
 
-GET /api/employee/MinYearsOfService - Get employees with a minimum number of service years
+GET /api/Employees/ByFullName - Get employees by fullname
 
-PUT /api/employee/deactivateEmployee - Deactivate an employee
+GET /api/Employees/min-years-of-service - Get employees with a minimum number of service years
+
+PUT /api/Employees/deactivate-employee - Deactivate an employee
 
 ### Department API
 
-GET /api/department/All - Get all departments
+GET /api/Departments - Get all departments
 
-GET /api/department/getDepartmentById - Get a department by ID
+GET /api/Departments/{id} - Get a department by ID
 
-POST /api/department/AddNewDepartment - Create a new department
+POST /api/Departments - Create a new department
 
-PUT /api/department/UpdateDepartment - Update a department
+PUT /api/Departments - Update a department
 
-DELETE /api/department/deleteDepartment - Delete a department
+DELETE /api/Departments - Delete a department
 
-GET /api/department/{id}/GetEmployeesByDepartmentName - Get employees in a specific department
+GET /api/Departments/emp-by-dep-id - Get employees in a specific department
 
